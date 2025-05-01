@@ -102,7 +102,7 @@ export class Greetd extends Service {
             ostream.put_string(json, null);
 
             const data = await istream.read_bytes_async(4, GLib.PRIORITY_DEFAULT, null);
-            const length = new Uint32Array(data.get_data()?.buffer || [0])[0];
+            const length = new Uint32Array((data.get_data()?.buffer || [0]) as ArrayBuffer)[0];
             const res = await istream.read_bytes_async(length, GLib.PRIORITY_DEFAULT, null);
             return JSON.parse(this._decoder.decode(res.get_data()!)) as Response;
         } finally {
